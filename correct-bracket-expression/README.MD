@@ -1,83 +1,119 @@
-# Correct Bracket Expressions Counter
+# Лічильник правильних дужкових виразів
 
-This project calculates the number of **correct bracket expressions** (valid parentheses combinations) for a given number `N` of opening and closing brackets.
+Цей проєкт обчислює кількість **правильних дужкових виразів** (валідних комбінацій дужок) для заданого числа `N` пар відкриваючих і закриваючих дужок.
 
-## Problem Description
-A **correct bracket expression**:
-1. Contains equal numbers of opening `(` and closing `)` brackets.
-2. Ensures every opening bracket has a matching closing bracket, and no closing bracket appears before its matching opening bracket.
+## Опис задачі
+**Правильний дужковий вираз**:
+1. Містить однакову кількість відкриваючих `(` і закриваючих `)` дужок.
+2. Забезпечує, що кожна відкрита дужка має відповідну закриваючу, і жодна закриваюча дужка не з'являється раніше своєї відкриваючої.
 
-### Examples:
-- For `N = 1`: One valid expression: `()`.
-- For `N = 2`: Two valid expressions: `()()` and `(())`.
-- For `N = 3`: Five valid expressions: `()()()`, `(()())`, `(())()`, `()(())`, and `((()))`.
+### Приклади:
+- Для `N = 1`: один правильний вираз: `()`.
+- Для `N = 2`: два правильних вирази: `()()` і `(())`.
+- Для `N = 3`: п'ять правильних виразів: `()()()`, `(()())`, `(())()`, `()(())`, `((()))`.
 
-The task is to compute the number of valid expressions for any non-negative integer `N`.
+Задача: обчислити кількість правильних виразів для будь-якого невід'ємного цілого числа `N`.
 
 ---
 
-## Solution Explanation
-The problem is solved using the **Catalan Number** formula:
+## Розв'язання задачі
+Для розв'язання використовується **число Каталана**.
+
+### Формула числа Каталана
 \[
 C_n = \frac{(2n)!}{(n+1)! \cdot n!}
 \]
 
-Where:
-- \( (2n)! \): Factorial of \( 2n \),
-- \( (n+1)! \): Factorial of \( n+1 \),
-- \( n! \): Factorial of \( n \).
+Де:
+- \( (2n)! \): факторіал числа \( 2n \),
+- \( (n+1)! \): факторіал числа \( n+1 \),
+- \( n! \): факторіал числа \( n \).
 
-This formula efficiently computes the number of valid expressions for any given `N`.
-
----
-
-## How It Works
-The program performs the following steps:
-1. Prompts the user to input `N` (number of pairs of brackets).
-2. Validates that `N` is a non-negative integer.
-3. Computes the \( n \)-th Catalan number using the factorial formula.
-4. Outputs the result.
+Ця формула дозволяє ефективно обчислити кількість правильних дужкових виразів для заданого `N`.
 
 ---
 
-## Code
+## Як працює програма
+Програма виконує наступні кроки:
+1. Запитує у користувача число `N` (кількість пар дужок).
+2. Перевіряє, що `N` є невід'ємним числом.
+3. Обчислює число Каталана для заданого `N`.
+4. Виводить результат.
+
+---
+
+## Код
 
 ```java
 import java.util.Scanner;
 
 public class BracketExpressions {
 
-    // Function to compute factorial of a number
+    // Функція для обчислення факторіалу числа
     private static long factorial(int num) {
         long result = 1;
         for (int i = 2; i <= num; i++) {
-            result *= i; // Multiply all integers from 1 to num
+            result *= i; // Перемножуємо всі числа від 1 до num
         }
         return result;
     }
 
-    // Function to compute the nth Catalan number
+    // Функція для обчислення числа Каталана
     private static long catalanNumber(int n) {
         if (n == 0) {
-            return 1; // Base case: 1 valid expression for N=0 (empty expression)
+            return 1; // Базовий випадок: 1 правильний вираз для N=0 (пустий вираз)
         }
         long numerator = factorial(2 * n); // (2n)!
         long denominator = factorial(n + 1) * factorial(n); // (n+1)! * n!
-        return numerator / denominator; // Divide numerator by denominator
+        return numerator / denominator; // Ділимо чисельник на знаменник
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter N (number of pairs of brackets): ");
-        int n = scanner.nextInt(); // Input the number of pairs
+        int n = scanner.nextInt(); // Вводимо кількість пар дужок
 
         if (n < 0) {
-            System.out.println("N should be a non-negative integer.");
+            System.out.println("N повинно бути невід'ємним числом.");
         } else {
-            // Compute the number of correct bracket expressions
+            // Обчислюємо кількість правильних дужкових виразів
             long result = catalanNumber(n);
-            System.out.println("Number of correct bracket expressions: " + result);
+            System.out.println("Кількість правильних дужкових виразів: " + result);
         }
     }
 }
+
+```
+---
+
+## Приклади
+Вхідні дані:
+mathematica
+Копировать код
+Enter N (number of pairs of brackets): 3
+Результат:
+Копировать код
+Кількість правильних дужкових виразів: 5
+
+---
+
+## Пояснення результату
+Для
+𝑁
+=
+3
+N=3 існує п'ять правильних виразів:
+
+()()()
+(()())
+(())()
+()(())
+((()))
+
+---
+
+## Примітки
+Програма використовує формулу числа Каталана для ефективного обчислення.
+𝑁
+N повинно бути невід'ємним числом; в іншому випадку програма видасть помилку.
